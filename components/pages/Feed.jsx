@@ -6,15 +6,40 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  useIonRouter,
+  IonModal,
 } from '@ionic/react';
-import Notifications from './Notifications';
-import { useState } from 'react';
+import {  useCallback, useState } from 'react';
 import { getHomeItems } from '../../store/selectors';
 import Store from '../../store';
 import { Virtuoso } from 'react-virtuoso';
+import { itemAnimation } from '../../transition';
 
-const FeedCard = ({ title, type, text, author, authorAvatar, image }) => (
-  <Card className="my-4 mx-auto">
+const Modal = ({isModal, setIsModal}) => {
+  return(
+    <IonModal
+    canDismiss={true}
+    initialBreakpoint={0.5}
+    handle={true}
+    breakpoints={[0, 0.5, 1]}
+    onWillDismiss={() => setIsModal(false)}
+    isOpen={isModal}
+    >
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Modal</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <p>Modal content</p>
+      </IonContent>
+    </IonModal>
+  )
+}
+
+const FeedCard = ({ title, type, text, author, authorAvatar, image }) => {
+  const [isModal, setIsModal] = useState(false)
+  return(<Card className="my-4 mx-auto">
     <div className="h-32 w-full relative">
       <img className="rounded-t-xl object-cover min-w-full min-h-full max-w-full max-h-full" src={image} alt="" />
     </div>
@@ -29,12 +54,33 @@ const FeedCard = ({ title, type, text, author, authorAvatar, image }) => (
         <h3 className="text-gray-500 dark:text-gray-200 m-l-8 text-sm font-medium">{author}</h3>
       </div>
     </div>
-  </Card>
-);
+    <Modal isModal={isModal} setIsModal={setIsModal}/>
+  </Card>)
+}
+
 
 const Feed = () => {
+  const history = useIonRouter()
   const homeItems = Store.useState(getHomeItems);
-  const [showNotifications, setShowNotifications] = useState(false);
+
+  const selectRoute = useCallback(() => {
+    const previousPath = history.routeInfo.pathname;
+    console.log(previousPath)
+    if (previousPath === '/tabs') {
+      history.push('/tabs-2')
+      return
+    }
+    if (previousPath === '/tabs-2') {
+      history.push('/tabs-3')
+      return
+    }
+    if (previousPath === '/tabs-3') {
+      history.push('/tabs')
+      return
+    }
+    console.log(history.routeInfo.pathname)
+    history.push('/tabs-2')
+  }, [history])
 
   return (
     <IonPage>
@@ -44,7 +90,21 @@ const Feed = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" fullscreen>
-        <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
+        <div className='flex flex-row gap-2'>
+        <button 
+        className='px-4 bg-zinc-500'
+        onClick={() => {
+         selectRoute()
+        }}>Next</button>
+        {history.routeInfo.pathname !== '/tabs' && (
+        <button 
+           className='px-4 bg-zinc-500'
+        onClick={() => {
+          // back
+          history.goBack(itemAnimation)
+        }}>Back</button>
+        )}
+        </div>
         <Virtuoso 
         components={({ Header: () => {
           return (
