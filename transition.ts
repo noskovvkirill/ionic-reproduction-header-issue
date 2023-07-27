@@ -2,7 +2,6 @@
 import {
   Animation,
   createAnimation,
-  iosTransitionAnimation,
 } from '@ionic/react';
 
 type Opts = {
