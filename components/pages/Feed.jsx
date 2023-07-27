@@ -9,8 +9,6 @@ import {
 import {  useCallback } from 'react';
 import { itemAnimation } from '../../transition';
 
-
-
 const Feed = () => {
   const history = useIonRouter()
   const selectRoute = useCallback(() => {
@@ -28,7 +26,6 @@ const Feed = () => {
       history.push('/tabs')
       return
     }
-    console.log(history.routeInfo.pathname)
     history.push('/tabs-2')
   }, [history])
 
@@ -45,7 +42,6 @@ const Feed = () => {
         <button 
            className='px-4 py-2 bg-zinc-500 rounded-md'
         onClick={() => {
-          // back
           history.goBack(itemAnimation)
         }}>Back</button>
         )}
@@ -56,7 +52,6 @@ const Feed = () => {
          selectRoute()
         }}>Next</button>
         )}
-       
         </div>
       </IonContent>
     </IonPage>
