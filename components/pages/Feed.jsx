@@ -5,32 +5,9 @@ import {
   IonTitle,
   IonContent,
   useIonRouter,
-  IonModal,
 } from '@ionic/react';
 import {  useCallback } from 'react';
 import { itemAnimation } from '../../transition';
-
-const Modal = ({isModal, setIsModal}) => {
-  return(
-    <IonModal
-    canDismiss={true}
-    initialBreakpoint={0.5}
-    handle={true}
-    breakpoints={[0, 0.5, 1]}
-    onWillDismiss={() => setIsModal(false)}
-    isOpen={isModal}
-    >
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Modal</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <p>Modal content</p>
-      </IonContent>
-    </IonModal>
-  )
-}
 
 
 
