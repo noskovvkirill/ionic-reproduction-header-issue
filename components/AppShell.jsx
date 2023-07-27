@@ -1,11 +1,8 @@
 import { IonApp,IonRouterOutlet, setupIonicReact } from '@ionic/react';
-
 import { StatusBar, Style } from '@capacitor/status-bar';
-
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
-
-import Tabs from './pages/Tabs';
+import Feed from './pages/Feed';
 
 setupIonicReact({
   mode: 'ios'
@@ -24,9 +21,9 @@ const AppShell = () => {
     <IonApp> 
       <IonReactRouter>
         <IonRouterOutlet id="main">
-          <Route path="/tabs" render={() => <Tabs />} />
-          <Route path="/tabs-2" render={() => <Tabs />} />
-          <Route path="/tabs-3" render={() => <Tabs />} />
+          <Route path="/tabs" render={() => <Feed />} />
+          <Route path="/tabs-2" render={() => <Feed />} />
+          <Route path="/tabs-3" render={() => <Feed />} />
           <Route path="/" render={() => <Redirect to="/tabs" />} exact={true} />
         </IonRouterOutlet>
       </IonReactRouter>
