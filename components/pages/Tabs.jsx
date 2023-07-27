@@ -1,7 +1,5 @@
-import { Redirect, Route } from 'react-router-dom';
+import {  Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar } from '@ionic/react';
-
-
 import Home from './Feed';
 
 
